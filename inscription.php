@@ -9,18 +9,44 @@ require_once 'templates/header.php';
 $errors = [];
 $messages = [];
 if (isset($_POST['addUser'])) {
-    /*
-        @todo On appelle addUser pour ajouter l'utilisateur
-        si true a été retourné, on affiche un message "Merci pour votre inscription"
-        sinon on affiche une erreur "Une erreur s'est produite lors de votre inscription"
-    */
+    $first_name = trim($_POST['first_name'] ?? '');
+    $last_name = trim($_POST['last_name'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+    
+    if (empty($first_name) || empty($last_name) || empty($email) || empty($password)) {
+        $errors[] = "Tous les champs sont obligatoires";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "L'email n'est pas valide";
+    } elseif (strlen($password) < 6) {
+        $errors[] = "Le mot de passe doit contenir au moins 6 caractères";
+    } else {
+        if (addUser($pdo, $first_name, $last_name, $email, $password)) {
+            $messages[] = "Merci pour votre inscription ! Vous pouvez maintenant vous connecter.";
+        } else {
+            $errors[] = "Une erreur s'est produite lors de votre inscription";
+        }
+    }
 }
 
 ?>
     <h1>Inscription</h1>
 
+    <?php if (!empty($errors)): ?>
+        <?php foreach ($errors as $error): ?>
+            <div class="alert alert-danger" role="alert">
+                <?= htmlspecialchars($error) ?>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
 
-    <?php // @todo afficher les erreurs ?>
+    <?php if (!empty($messages)): ?>
+        <?php foreach ($messages as $message): ?>
+            <div class="alert alert-success" role="alert">
+                <?= htmlspecialchars($message) ?>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
 
     <form method="POST">
         <div class="mb-3">

@@ -1,10 +1,10 @@
 <?php 
 require_once __DIR__."/lib/config.php";
+require_once __DIR__."/lib/session.php";
 require_once __DIR__."/templates/header.php"; 
 ?>
 
-
-<?php 
+    <?php 
     $messages = [];
     $errors = [];
 
@@ -36,7 +36,6 @@ require_once __DIR__."/templates/header.php";
         }
 
     }
-
 ?>
 
 <h1>Contact</h1>
@@ -48,7 +47,7 @@ require_once __DIR__."/templates/header.php";
 <?php } ?>
 
 <?php foreach($errors as $error) { ?>
-    <div class="alert alert-success">
+    <div class="alert alert-danger">
         <?=$error; ?>
     </div>
 <?php } ?>

@@ -1,31 +1,9 @@
--- phpMyAdmin SQL Dump
--- version 5.1.1
--- https://www.phpmyadmin.net/
---
--- Hôte : 127.0.0.1:3306
--- Généré le : mar. 26 sep. 2023 à 15:56
--- Version du serveur : 5.7.36
--- Version de PHP : 8.0.13
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de données : `keyce_techtrendz_dev`
---
-
--- --------------------------------------------------------
-
---
--- Structure de la table `articles`
---
 
 DROP TABLE IF EXISTS `articles`;
 CREATE TABLE IF NOT EXISTS `articles` (
@@ -38,9 +16,6 @@ CREATE TABLE IF NOT EXISTS `articles` (
   KEY `category_id` (`category_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 
---
--- Déchargement des données de la table `articles`
---
 
 INSERT INTO `articles` (`id`, `category_id`, `title`, `content`, `image`) VALUES
 (1, 1, 'Article 1', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, amet. Cum labore possimus ad vitae minima nesciunt commodi eos.', NULL),
@@ -96,11 +71,7 @@ INSERT INTO `articles` (`id`, `category_id`, `title`, `content`, `image`) VALUES
 (51, 2, 'React Natives : Quelles différences par rapport à React', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, amet. Cum labore possimus ad vitae minima nesciunt commodi eos.\r\nLorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, amet. Cum labore possimus ad vitae minima nesciunt commodi eos.\r\nLorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, amet. Cum labore possimus ad vitae minima nesciunt commodi eos.\r\nLorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, amet. Cum labore possimus ad vitae minima nesciunt commodi eos.\r\nLorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, amet. Cum labore possimus ad vitae minima nesciunt commodi eos.', '2-react-vs-react-native.jpg'),
 (52, 3, 'Les meilleurs outils DevOps', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, amet. Cum labore possimus ad vitae minima nesciunt commodi eos.\r\nLorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, amet. Cum labore possimus ad vitae minima nesciunt commodi eos.\r\nLorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, amet. Cum labore possimus ad vitae minima nesciunt commodi eos.\r\nLorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, amet. Cum labore possimus ad vitae minima nesciunt commodi eos.\r\nLorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, amet. Cum labore possimus ad vitae minima nesciunt commodi eos.', '3-devops.png');
 
--- --------------------------------------------------------
 
---
--- Structure de la table `categories`
---
 
 DROP TABLE IF EXISTS `categories`;
 CREATE TABLE IF NOT EXISTS `categories` (
@@ -109,20 +80,14 @@ CREATE TABLE IF NOT EXISTS `categories` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
---
--- Déchargement des données de la table `categories`
---
+
 
 INSERT INTO `categories` (`id`, `name`) VALUES
 (1, 'Développement Web'),
 (2, 'Développement Mobile'),
 (3, 'DevOps');
 
--- --------------------------------------------------------
 
---
--- Structure de la table `users`
---
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
@@ -135,25 +100,16 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
---
--- Déchargement des données de la table `users`
---
+
 
 INSERT INTO `users` (`id`, `email`, `password`, `first_name`, `last_name`, `role`) VALUES
 (3, 'admin@test.com', '$2y$10$iwpzJ3Q2im1Ci80YkplP7.nzh5hYay.GRYR7mLkwpqJ5F3rPYVkqC', 'Admin', 'Admin', 'admin'),
 (4, 'user@test.com', '$2y$10$iwpzJ3Q2im1Ci80YkplP7.nzh5hYay.GRYR7mLkwpqJ5F3rPYVkqC', 'John', 'Doe', 'user');
 
---
--- Contraintes pour les tables déchargées
---
 
---
--- Contraintes pour la table `articles`
---
 ALTER TABLE `articles`
   ADD CONSTRAINT `articles_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+

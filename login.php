@@ -6,32 +6,44 @@ require_once 'lib/user.php';
 
 require_once 'templates/header.php';
 
-
 $errors = [];
 $messages = [];
 
-// Si le formulaire a été souis
 if (isset($_POST['loginUser'])) {
-    //@todo appeler une méthode verifyUserLoginPassword qui retourne false ou retourne un tableau avec l'utisateur
-    $user = verifyUserLoginPassword($pdo, $_POST['email'], $_POST['password']);
-
-    /* @todo si on récupère un utilisateur, alors on stocke l'utilisateur dans la session
-        et on redirige l'utilisateur soit vers l'admin (si role admin) soit vers l'accueil
-        sinon on affiche une erreur "Email ou mot de passe incorrect"
-    */
-
-  }
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+    
+    if (empty($email) || empty($password)) {
+        $errors[] = "Email et mot de passe sont obligatoires";
+    } else {
+        $user = verifyUserLoginPassword($pdo, $email, $password);
+        
+        if ($user) {
+            $_SESSION['user'] = $user;
+            
+            if ($user['role'] === 'admin') {
+                header('Location: admin/index.php');
+                exit;
+            } else {
+                header('Location: index.php');
+                exit;
+            }
+        } else {
+            $errors[] = "Email ou mot de passe incorrect";
+        }
+    }
+}
 
 ?>
     <h1>Login</h1>
 
-    <?php // @todo afficher les erreurs avec la structure suivante :
-        /*
-        <div class="alert alert-danger" role="alert">
-            Utilisatuer ou mot de passe incorrect
-        </div>
-        */
-    ?>
+    <?php if (!empty($errors)): ?>
+        <?php foreach ($errors as $error): ?>
+            <div class="alert alert-danger" role="alert">
+                <?= htmlspecialchars($error) ?>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
 
     <form method="POST">
         <div class="mb-3">
@@ -44,7 +56,7 @@ if (isset($_POST['loginUser'])) {
             <input type="password" class="form-control" id="password" name="password">
         </div>
 
-        <input type="submit" name="loginUser" class="btn btn-primary" value="Enregistrer">
+        <input type="submit" name="loginUser" class="btn btn-primary" value="Se connecter">
 
     </form>
 
